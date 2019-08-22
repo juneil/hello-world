@@ -1,0 +1,6 @@
+services:
+  - docker
+
+script:
+  - export IMAGE_NAME=helloworld
+  - docker build -t $IMAGE_NAME .
