@@ -6,7 +6,7 @@ jobs:
     - if: tag IS present
       script:
       - export IMAGE_NAME=helloworld
-      - export TAG_NAME=$REGISTRY/helloworld:$BITBUCKET_TAG
+      - export TAG_NAME=$REGISTRY/helloworld:$TRAVIS_TAG
       - docker build -t $IMAGE_NAME .
       - docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD $REGISTRY
       - docker tag $IMAGE_NAME $TAG_NAME
