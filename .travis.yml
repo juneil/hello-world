@@ -14,9 +14,6 @@ before_deploy:
 - docker tag $IMAGE_NAME $TAG_NAME
 - docker push $TAG_NAME
 
-jobs:
-  include:
-    - if: tag IS blank
-      script:
-      - export IMAGE_NAME=helloworld
-      - docker build -t $IMAGE_NAME .
+script:
+- export IMAGE_NAME=helloworld
+- docker build -t $IMAGE_NAME .
