@@ -7,12 +7,13 @@ deploy:
     tags: true
     
 before_deploy:
-- export IMAGE_NAME=helloworld
-- export TAG_NAME=$REGISTRY/helloworld:$TRAVIS_TAG
-- docker build -t $IMAGE_NAME .
+- export TAG_NAME_1=$REGISTRY/$IMAGE_NAME:$TRAVIS_TAG
+- export TAG_NAME_2=$REGISTRY/$IMAGE_NAME:latest
 - docker login --username $REGISTRY_USERNAME --password $REGISTRY_PASSWORD $REGISTRY
-- docker tag $IMAGE_NAME $TAG_NAME
-- docker push $TAG_NAME
+- docker tag $IMAGE_NAME $TAG_NAME_1
+- docker push $TAG_NAME_1
+- docker tag $IMAGE_NAME $TAG_NAME_2
+- docker push $TAG_NAME_2
 
 script:
 - export IMAGE_NAME=helloworld
