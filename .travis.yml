@@ -2,18 +2,17 @@ services:
   - docker
 
 deploy:
-  provider: releases
+  provider: script
+  script:
+  - export TAG_NAME_1=$REGISTRY/$IMAGE_NAME:$TRAVIS_TAG
+  - export TAG_NAME_2=$REGISTRY/$IMAGE_NAME:latest
+  - docker login --username $REGISTRY_USERNAME --password $REGISTRY_PASSWORD $REGISTRY
+  - docker tag $IMAGE_NAME $TAG_NAME_1
+  - docker push $TAG_NAME_1
+  - docker tag $IMAGE_NAME $TAG_NAME_2
+  - docker push $TAG_NAME_2
   on:
     tags: true
-    
-before_deploy:
-- export TAG_NAME_1=$REGISTRY/$IMAGE_NAME:$TRAVIS_TAG
-- export TAG_NAME_2=$REGISTRY/$IMAGE_NAME:latest
-- docker login --username $REGISTRY_USERNAME --password $REGISTRY_PASSWORD $REGISTRY
-- docker tag $IMAGE_NAME $TAG_NAME_1
-- docker push $TAG_NAME_1
-- docker tag $IMAGE_NAME $TAG_NAME_2
-- docker push $TAG_NAME_2
 
 script:
 - export IMAGE_NAME=helloworld
